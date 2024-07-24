@@ -9,11 +9,8 @@ class Project extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the type that owns the project.
-     */
-    public function type()
+    public function technologies()
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsToMany(Technology::class);
     }
 }
