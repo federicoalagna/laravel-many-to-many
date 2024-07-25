@@ -8,7 +8,7 @@
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
 
-<body class="bg-light">>
+<body class="bg-light">
     <div class="d-flex justify-content-center mt-4">
         <h1>Benvenuto nel Back Office!</h1>
     </div>

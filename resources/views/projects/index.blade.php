@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Progetti</h1>
+        <h1 class="mt-3 mb-3">Progetti</h1>
         <a href="{{ route('projects.create') }}" class="btn btn-primary mb-3">Crea Nuovo Progetto</a>
         @if ($projects->isEmpty())
             <p>Nessun progetto disponibile.</p>

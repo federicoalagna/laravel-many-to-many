@@ -2,60 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
-use App\Models\Type;
-use App\Models\Technology;
 use Illuminate\Http\Request;
+use App\Models\Project;
+
 
 class ProjectController extends Controller
 {
-    // ...
+    public function index()
+    {
+        $projects = Project::all();
+        return view('projects.index', compact('projects'));
+    }
 
     public function create()
     {
-        $types = Type::all();
-        $technologies = Technology::all();
-        return view('projects.create', compact('types', 'technologies'));
+        return view('projects.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'type_id' => 'nullable|exists:types,id',
-            'technologies' => 'nullable|array',
-            'technologies.*' => 'exists:technologies,id',
+        $request->validate([
+            'titolo' => 'required',
+            'descrizione' => 'required',
         ]);
 
-        $project = Project::create($validated);
-        $project->technologies()->sync($request->input('technologies', []));
+        Project::create($request->all());
+        return redirect()->route('projects.index');
+    }
 
-        return redirect()->route('projects.index')->with('success', 'Progetto creato con successo');
+    public function show(Project $project)
+    {
+        return view('projects.show', compact('project'));
     }
 
     public function edit(Project $project)
     {
-        $types = Type::all();
-        $technologies = Technology::all();
-        return view('projects.edit', compact('project', 'types', 'technologies'));
+        return view('projects.edit', compact('project'));
     }
 
     public function update(Request $request, Project $project)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'type_id' => 'nullable|exists:types,id',
-            'technologies' => 'nullable|array',
-            'technologies.*' => 'exists:technologies,id',
+        $request->validate([
+            'titolo' => 'required',
+            'descrizione' => 'required',
         ]);
 
-        $project->update($validated);
-        $project->technologies()->sync($request->input('technologies', []));
-
-        return redirect()->route('projects.index')->with('success', 'Progetto aggiornato con successo');
+        $project->update($request->all());
+        return redirect()->route('projects.index');
     }
 
-    // ...
+    public function destroy(Project $project)
+    {
+        $project->delete();
+        return redirect()->route('projects.index');
+    }
 }
