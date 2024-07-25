@@ -5,7 +5,7 @@
         <h1>{{ $project->name }}</h1>
         <p>{{ $project->description }}</p>
         @if ($project->type)
-            <p>Tipologia: {{ $project->type->name }}</p>
+            <p>Tipo: {{ $project->type->name }}</p>
         @endif
         @if ($project->technologies->isNotEmpty())
             <p>Tecnologie utilizzate:</p>
@@ -15,6 +15,5 @@
                 @endforeach
             </ul>
         @endif
-        <a href="{{ route('projects.index') }}" class="btn btn-secondary">Torna all'elenco progetti</a>
     </div>
 @endsection
